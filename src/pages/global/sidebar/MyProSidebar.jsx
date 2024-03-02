@@ -17,7 +17,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -137,9 +137,9 @@ const MyProSidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
+              title="Add Account"
+              to="/carddetail"
+              icon={<AccountBalanceIcon />}
               selected={selected}
               setSelected={setSelected}
             />

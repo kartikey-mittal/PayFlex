@@ -22,7 +22,7 @@ const Transaction = () => {
     },
     {
       field: "age",
-      headerName: "Age",
+      headerName: "Amount",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -31,7 +31,7 @@ const Transaction = () => {
     { field: "email", headerName: "Email", width: 200 },
     {
       field: "access",
-      headerName: "Access Llvel",
+      headerName: "Status",
       width: 100,
       renderCell: ({ row: { access } }) => {
         return (
