@@ -27,20 +27,23 @@ import GroupIcon from '@mui/icons-material/Group';
 import { Height } from "@mui/icons-material";
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import PieChart from "../../components/PieChart";
-
+import React, { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 // import Typography from '@mui/material/Typography';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SendIcon from '@mui/icons-material/Send';
-
+import { collection, getDocs, query, where,doc,getDoc } from "firebase/firestore";
+import { db } from '../../firebase'; // Adjust the import path as necessary
 
 const Dashboard = () => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
 
-
+  const [totalBalance, setTotalBalance] = useState(null);
+  const [totalSpending, setTotalSpending] = useState(null)
+  const [totalTransactions, setTotalTransactions] = useState(null);
 
   const handleSendMoneyClick = () => {
     alert('hello world')
@@ -48,6 +51,31 @@ const Dashboard = () => {
   const handleViewTransactionsClick = () => {
     alert('hello world')
   };
+  const phoneNumber = localStorage.getItem("phoneNumber");
+  console.log(phoneNumber);
+  useEffect(() => {
+    const fetchUserData = async () => {
+       const phoneNumber = localStorage.getItem("phoneNumber"); // Assuming phone number is stored in localStorage
+       if (phoneNumber) {
+         const userDocRef = doc(db, "users", phoneNumber);
+         const userDocSnap = await getDoc(userDocRef);
+   
+         if (userDocSnap.exists()) {
+           const userData = userDocSnap.data();
+           setTotalBalance(userData.Total_Balance);
+           setTotalSpending(userData.Spending);
+   
+           // Fetch the number of transactions
+           const transactionsCollectionRef = collection(userDocRef, "transaction");
+           const transactionsQuery = query(transactionsCollectionRef);
+           const transactionsSnapshot = await getDocs(transactionsQuery);
+           setTotalTransactions(transactionsSnapshot.size);
+         }
+       }
+    };
+   
+    fetchUserData();
+   }, []);
 
   return (
     <>
@@ -79,7 +107,7 @@ const Dashboard = () => {
               justifyContent="center"
             >
               <StatBox
-                title="₹ 12,361"
+                title={totalBalance ? `₹ ${totalBalance}` : "Loading..."}
                 subtitle="Total Balance"
                 progress="0.75"
                 increase="+14%"
@@ -100,7 +128,7 @@ const Dashboard = () => {
               justifyContent="center"
             >
               <StatBox
-                title="₹ 431"
+                title={totalSpending ? `₹ ${totalSpending}` : "Loading..."}
                 subtitle="Total Spending"
                 progress="0.50"
                 increase="+21%"
@@ -121,7 +149,7 @@ const Dashboard = () => {
               justifyContent="center"
             >
               <StatBox
-                title="32,441"
+                 title={totalTransactions !== null ? `${totalTransactions}` : "Loading..."}
                 subtitle="Total Transactions"
                 progress="0.30"
                 increase="+5%"

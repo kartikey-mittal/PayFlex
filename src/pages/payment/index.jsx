@@ -1,22 +1,21 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, Grid, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import Header from "../../components/Header";
+import { Box, Typography, TextField, Button, Grid } from "@mui/material";
+import { db } from '../../firebase'; // Adjust the import path as necessary
+import { doc, getDoc, collection, addDoc,updateDoc,setDoc } from 'firebase/firestore';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoteIcon from "@mui/icons-material/Note";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import Header from "../../components/Header";
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 const Payment = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   const [formData, setFormData] = useState({
     accountNumber: '',
     note: '',
     amount: ''
   });
+
+  const senderphone = localStorage.getItem('phoneNumber');
+  console.log(senderphone);
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -26,11 +25,74 @@ const Payment = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add your logic here to handle form submission
-    console.log("Form submitted:", formData);
-  };
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    // Check if the account number exists in the users collection
+    const docRef = doc(db, 'users', formData.accountNumber);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // Account number exists, handle the submission
+      console.log('Account number exists:', formData);
+      
+      // Update receiver's Total_Balance
+      const receiverData = docSnap.data();
+      const updatedReceiverBalance = receiverData.Total_Balance + parseFloat(formData.amount); // Assuming Total_Balance is a numeric field
+      await updateDoc(docRef, { Total_Balance: updatedReceiverBalance });
+
+      // Update sender's Total_Balance
+      const senderDocRef = doc(db, 'users', senderphone);
+      const senderDocSnap = await getDoc(senderDocRef);
+      if (senderDocSnap.exists()) {
+        const senderData = senderDocSnap.data();
+        const updatedSenderBalance = senderData.Total_Balance - parseFloat(formData.amount);
+        await updateDoc(senderDocRef, { Total_Balance: updatedSenderBalance });
+
+        // Create transaction document
+        const transactionData = {
+          Sender: senderphone,
+          Receiver: formData.accountNumber,
+          Amount: parseFloat(formData.amount),
+          Note: formData.note || '',
+          Date: new Date().toISOString()
+        };
+        await addDoc(collection(db, 'transactions'), transactionData);
+
+
+        // Create transaction document in sender's collection
+const senderTransactionRef = doc(collection(db, 'users', senderphone, 'transactions'));
+await setDoc(senderTransactionRef, transactionData);
+
+// Create transaction document in receiver's collection
+const receiverTransactionRef = doc(collection(db, 'users', formData.accountNumber, 'transactions'));
+await setDoc(receiverTransactionRef, transactionData);
+
+        // Clear the form data after successful submission
+        setFormData({
+          accountNumber: '',
+          note: '',
+          amount: ''
+        });
+        
+        alert('Transaction successful');
+      } else {
+        console.error('Sender data not found');
+        alert('Sender data not found');
+      }
+    } else {
+      // Account number does not exist
+      console.log('Account number does not exist');
+      alert('Receiver not found');
+    }
+  } catch (error) {
+    console.error('Error processing transaction:', error);
+    alert('Error processing transaction');
+  }
+};
+
+
 
   return (
     <>
@@ -116,28 +178,28 @@ const Payment = () => {
                 <Box display="flex" alignItems="center" mb={2}>
                   <AccountCircleIcon style={{ color: 'white', marginRight: '10px' }} />
                   <TextField
-                    label="Account Number"
-                    variant="outlined"
-                    name="accountNumber"
-                    value={formData.accountNumber}
-                    onChange={handleFormChange}
-                    fullWidth
-                    InputProps={{ style: { color: 'white' } }}
-                    InputLabelProps={{ style: { color: 'white' } }}
-                  />
+                label="Account Number"
+                variant="outlined"
+                name="accountNumber"
+                value={formData.accountNumber}
+                onChange={handleFormChange}
+                fullWidth
+                InputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'white' } }}
+              />
                 </Box>
                 <Box display="flex" alignItems="center">
                   <NoteIcon style={{ color: 'white', marginRight: '10px' }} />
                   <TextField
-                    label="Note"
-                    variant="outlined"
-                    name="note"
-                    value={formData.note}
-                    onChange={handleFormChange}
-                    fullWidth
-                    InputProps={{ style: { color: 'white' } }}
-                    InputLabelProps={{ style: { color: 'white' } }}
-                  />
+                label="Note"
+                variant="outlined"
+                name="note"
+                value={formData.note}
+                onChange={handleFormChange}
+                fullWidth
+                InputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'white' } }}
+              />
                 </Box>
               </Grid>
               <Grid item xs={6}>
@@ -145,18 +207,18 @@ const Payment = () => {
                   <Typography variant="h5" style={{ color: 'white', fontWeight: 'normal', marginBottom: '20px' }}>Amount</Typography>
                   {/* <MonetizationOnIcon style={{ color: 'white', marginBottom: '10px', fontSize: '3rem' }} /> */}
                   <TextField
-                    label="Amount"
-                    variant="outlined"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleFormChange}
-                    fullWidth
-                    InputProps={{
-                      style: { color: 'black', backgroundColor: '#4CAF50', fontSize: '1.5rem', fontWeight: 'bold', height: '100%' },
-                      startAdornment: <Typography variant="body1" style={{ color: 'white', marginRight: '5px', fontSize: '2rem', fontWeight: 600 }}>₹</Typography>
-                    }}
-                    InputLabelProps={{ style: { color: 'white', fontWeight: 'bold', fontSize: '1.1rem' } }}
-                  />
+                label="Amount"
+                variant="outlined"
+                name="amount"
+                value={formData.amount}
+                onChange={handleFormChange}
+                fullWidth
+                InputProps={{
+                  style: { color: 'black', backgroundColor: '#4CAF50', fontSize: '1.5rem', fontWeight: 'bold', height: '100%' },
+                  startAdornment: <Typography variant="body1" style={{ color: 'white', marginRight: '5px', fontSize: '2rem', fontWeight: 600 }}>₹</Typography>
+                }}
+                InputLabelProps={{ style: { color: 'white', fontWeight: 'bold', fontSize: '1.1rem' } }}
+              />
                 </Box>
 
               </Grid>

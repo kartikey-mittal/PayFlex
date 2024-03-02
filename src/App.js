@@ -7,7 +7,7 @@ import Topbar from "./pages/global/Topbar";
 
 import Dashboard from "./pages/dashboard";
 import Team from "./pages/transaction";
-import Invoices from "./pages/invoices";
+import Invoices from "./pages/payment";
 import Contacts from "./pages/contacts";
 import Form from "./pages/form";
 import Calendar from "./pages/calendar";
@@ -17,7 +17,7 @@ import Pie from "./pages/pie";
 import FAQ from "./pages/faq";
 import Geography from "./pages/geography";
 import SendPay from "./pages/sendpay";
-import Payment from "./pages/invoices";
+import Payment from "./pages/payment";
 import Transaction from "./pages/transaction";
 import CardDetail from "./pages/CardDetail";
 import Tick from "./components/Tick";
