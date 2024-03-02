@@ -17,6 +17,7 @@ import Pie from "./pages/pie";
 import FAQ from "./pages/faq";
 import Geography from "./pages/geography";
 import SendPay from "./pages/sendpay";
+import CardDetail from "./pages/CardDetail";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -40,6 +41,7 @@ const App = () => {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/geography" element={<Geography />} />
                 <Route path="/sendpay" element={<SendPay />} />
+                <Route path="/carddetail" element={<CardDetail />} />
               </Routes>
             </main>
           </div>

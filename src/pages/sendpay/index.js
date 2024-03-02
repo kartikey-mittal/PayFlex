@@ -296,6 +296,7 @@ import {
                       ${transaction.cost}
                     </Box>
                   </Box>
+                  
                 );
               })}
             </Box>
