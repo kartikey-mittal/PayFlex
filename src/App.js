@@ -20,6 +20,7 @@ import SendPay from "./pages/sendpay";
 import Payment from "./pages/invoices";
 import Transaction from "./pages/transaction";
 import CardDetail from "./pages/CardDetail";
+import Tick from "./components/Tick";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -45,6 +46,7 @@ const App = () => {
                 <Route path="/sendpay" element={<SendPay />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/carddetail" element={<CardDetail />} />
+                <Route path="/tick" element={<Tick />} />
               </Routes>
             </main>
           </div>
