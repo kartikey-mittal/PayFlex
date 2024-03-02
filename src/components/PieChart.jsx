@@ -2,11 +2,44 @@ import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import { useTheme } from '@mui/material';
 import { tokens } from '../theme';
-import { mockPieData } from '../data/mockData';
 
+import { useState,useEffect } from 'react';
+import { db } from '../firebase'; // Import your Firebase database instance
+import { collection, getDocs } from 'firebase/firestore';
 const PieChart = ({isDashboard=false}) => {
+    const [pieData, setPieData] = useState([]);
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+
+    useEffect(() => {
+        const fetchTransactionData = async () => {
+            try {
+                const currentUserPhone = localStorage.getItem('phoneNumber');
+                const transactionsRef = collection(db, 'users', currentUserPhone, 'transactions');
+                const querySnapshot = await getDocs(transactionsRef);
+                const data = [];
+
+                querySnapshot.forEach((doc) => {
+                    const transactionData = doc.data();
+                    if (transactionData.Sender.phone === currentUserPhone) {
+                        data.push({
+                            id: transactionData.Receiver.phone, // Use receiver phone as ID
+                            label: transactionData.Receiver.name, // Use receiver name as label
+                            value: transactionData.Amount, // Use transaction amount as value
+                            color: colors.primary[400], // Use a fixed color or generate dynamically
+                        });
+                    }
+                });
+
+                setPieData(data);
+            } catch (error) {
+                console.error('Error fetching transaction data:', error);
+            }
+        };
+
+        fetchTransactionData();
+    }, );
+
     return (
         <ResponsivePie
             theme={{
@@ -43,7 +76,7 @@ const PieChart = ({isDashboard=false}) => {
                     },
                 }
             }}
-            data={mockPieData}
+            data={pieData}
             margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
             innerRadius={0.5}
             padAngle={0.7}

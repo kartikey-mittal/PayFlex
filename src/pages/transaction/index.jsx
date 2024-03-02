@@ -1,38 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { db } from '../../firebase'; // Import your Firebase database instance
+import { collection, getDocs } from 'firebase/firestore';
 import Header from "../../components/Header";
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
 const Transaction = () => {
+  const [transactions, setTransactions] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  useEffect(() => {
+    const getTransactionsForCurrentUser = async () => {
+      try {
+        const currentUserPhone = localStorage.getItem('phoneNumber');
+        const transactionsRef = collection(db, 'users', currentUserPhone, 'transactions');
+        const querySnapshot = await getDocs(transactionsRef);
+        const transactionsData = [];
+  
+        querySnapshot.forEach((doc) => {
+          const transactionData = doc.data();
+          if (transactionData.Sender.phone === currentUserPhone) {
+            // If the current user sent the transaction, include it in the output
+            transactionsData.push({
+              id: transactionsData.length + 1, // Incremental ID
+              name: transactionData.Receiver.name,
+              phone: transactionData.Receiver.phone,
+              email: transactionData.Receiver.email,
+              amount: transactionData.Amount,
+              date: transactionData.Date,
+              note: transactionData.Note,
+              access: 'outgoing'
+            });
+          }
+          else{
+            transactionsData.push({
+              id: transactionsData.length + 1, // Incremental ID
+              name: transactionData.Sender.name,
+              phone: transactionData.Sender.phone,
+              email: transactionData.Sender.email,
+              amount: transactionData.Amount,
+              date: transactionData.Date,
+              note: transactionData.Note,
+              access: 'incoming'
+            });
+          }
+        });
+  
+        setTransactions(transactionsData);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
+
+    getTransactionsForCurrentUser();
+  }, []);
+
   const columns = [
     { field: "id", headerName: "Id" },
-    {
-      field: "name",
-      headerName: "Name",
-      width: 200,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Amount",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    { field: "phone", headerName: "Phone Number", width: 100 },
+    { field: "name", headerName: "Name", width: 120 },
+    { field: "amount", headerName: "Amount", type: "number", width: 120 },
+    { field: "phone", headerName: "Phone Number", width: 150 },
     { field: "email", headerName: "Email", width: 200 },
+    { field: "date", headerName: "Date", width: 200 },
     {
       field: "access",
       headerName: "Status",
-      width: 100,
+      width: 150,
       renderCell: ({ row: { access } }) => {
         return (
           <Box
@@ -42,15 +79,12 @@ const Transaction = () => {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "incoming"
-                ? 'green'
-                : 'red'
+              access === "incoming" ? 'green' : 'red'
             }
             borderRadius="4px"
           >
             {access === "incoming" && <ArrowDownwardIcon />}
             {access === "outgoing" && <ArrowOutwardIcon />}
-            
             <Typography color='white' sx={{ ml: "5px" ,pr:'5px'}}>
               {access}
             </Typography>
@@ -59,6 +93,7 @@ const Transaction = () => {
       },
     },
   ];
+
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -93,7 +128,7 @@ const Transaction = () => {
           },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns} />
+        <DataGrid rows={transactions} columns={columns} />
       </Box>
     </Box>
   );

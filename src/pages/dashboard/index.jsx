@@ -1,39 +1,39 @@
 import {
   Box,
 
-  IconButton,
+  // IconButton,
   Typography,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
+// import { mockTransactions } from "../../data/mockData";
+// import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+// import EmailIcon from "@mui/icons-material/Email";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+// import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+// import PersonAddIcon from "@mui/icons-material/PersonAdd";
+// import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
-import LineChart from "../../components/LineChart";
-import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
+// import LineChart from "../../components/LineChart";
+// import GeographyChart from "../../components/GeographyChart";
+// import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
+// import ProgressCircle from "../../components/ProgressCircle";
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ContactlessIcon from '@mui/icons-material/Contactless';
 import GroupIcon from '@mui/icons-material/Group';
-import { Height } from "@mui/icons-material";
-import CallMadeIcon from '@mui/icons-material/CallMade';
+// import { Height } from "@mui/icons-material";
+// import CallMadeIcon from '@mui/icons-material/CallMade';
 import PieChart from "../../components/PieChart";
 import React, { useState, useEffect } from "react";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+// import Card from '@mui/material/Card';
+// import CardContent from '@mui/material/CardContent';
 // import Typography from '@mui/material/Typography';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SendIcon from '@mui/icons-material/Send';
-import { collection, getDocs, query, where,doc,getDoc } from "firebase/firestore";
+import { collection, getDocs, query,doc,getDoc } from "firebase/firestore";
 import { db } from '../../firebase'; // Adjust the import path as necessary
 
 const Dashboard = () => {
@@ -41,6 +41,7 @@ const Dashboard = () => {
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
 
+  // const [alluser,setAllUser] = useState(5)
   const [totalBalance, setTotalBalance] = useState(null);
   const [totalSpending, setTotalSpending] = useState(null)
   const [totalTransactions, setTotalTransactions] = useState(null);
@@ -51,6 +52,7 @@ const Dashboard = () => {
   const handleViewTransactionsClick = () => {
     alert('hello world')
   };
+ 
   const phoneNumber = localStorage.getItem("phoneNumber");
   console.log(phoneNumber);
   useEffect(() => {
@@ -59,14 +61,14 @@ const Dashboard = () => {
        if (phoneNumber) {
          const userDocRef = doc(db, "users", phoneNumber);
          const userDocSnap = await getDoc(userDocRef);
-   
+      
          if (userDocSnap.exists()) {
            const userData = userDocSnap.data();
            setTotalBalance(userData.Total_Balance);
            setTotalSpending(userData.Spending);
    
            // Fetch the number of transactions
-           const transactionsCollectionRef = collection(userDocRef, "transaction");
+           const transactionsCollectionRef = collection(userDocRef, "transactions");
            const transactionsQuery = query(transactionsCollectionRef);
            const transactionsSnapshot = await getDocs(transactionsQuery);
            setTotalTransactions(transactionsSnapshot.size);
@@ -170,8 +172,8 @@ const Dashboard = () => {
               justifyContent="center"
             >
               <StatBox
-                title="1,325,134"
-                subtitle="Total Contacts"
+                title="5"
+                subtitle="Total Users"
                 progress="0.80"
                 increase="+43%"
                 icon={

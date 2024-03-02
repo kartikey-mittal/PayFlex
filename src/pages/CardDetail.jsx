@@ -5,7 +5,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import EventIcon from "@mui/icons-material/Event";
 import SecurityIcon from "@mui/icons-material/Security";
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
+import { setDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 function CardDetail() {
   const [state, setState] = useState({
@@ -18,12 +20,29 @@ function CardDetail() {
 
   const handleInputChange = (evt) => {
     const { name, value } = evt.target;
-
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleInputFocus = (evt) => {
     setState((prev) => ({ ...prev, focus: evt.target.name }));
+  };
+
+  const handleAddCard = async () => {
+    // Update Firestore
+    try {
+      const localStoragePhoneNumber = localStorage.getItem('phoneNumber');
+      const amountToAdd = Math.floor(Math.random() * 9001) + 1000; // Generate a random amount between 1000 and 10000
+      const docRef = doc(db, 'users', localStoragePhoneNumber);
+      await setDoc(docRef, { Total_Balance: amountToAdd }, { merge: true });
+
+      // Update localStorage
+      localStorage.setItem('Total_Balance', amountToAdd.toString());
+
+      // Show success popup
+      alert(`${amountToAdd} INR has been added to your account successfully.`);
+    } catch (error) {
+      console.error('Error adding amount to account: ', error);
+    }
   };
 
   return (
@@ -193,7 +212,7 @@ function CardDetail() {
         >
           <div style={{ borderBottom: "2px dashed grey", width: "100%", marginTop: "30px" }}></div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "40px" }}>
-            <button style={{ padding: "10px 40px", borderRadius: "20px", backgroundColor: "#20B756", color: "white", border: "none", cursor: "pointer", fontSize: "20px", marginBottom: "30px" }}>Add Card</button>
+            <button onClick={handleAddCard} style={{ padding: "10px 40px", borderRadius: "20px", backgroundColor: "#20B756", color: "white", border: "none", cursor: "pointer", fontSize: "20px", marginBottom: "30px" }}>Add Card</button>
             <button style={{ padding: "10px 40px", borderRadius: "20px", borderColor: "green", color: "green", backgroundColor: "white", cursor: "pointer", fontSize: "20px" }}>Cancel</button>
           </div>
         </div>
