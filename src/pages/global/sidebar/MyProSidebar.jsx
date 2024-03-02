@@ -17,13 +17,14 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
 import SwitchLeftOutlinedIcon from "@mui/icons-material/SwitchLeftOutlined";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -87,27 +88,7 @@ const MyProSidebar = () => {
         image={sidebarImage}
       >
         <Menu iconshape="square">
-          <MenuItem
-            
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[100],
-            }}
-          >
-            {!collapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <Typography variant="h3" color={colors.grey[100]} >
-                  FlexPay
-                </Typography>
-               
-              </Box>
-            )}
-          </MenuItem>
+          
           {!collapsed && (
             <Box mb="25px">
               <Box
@@ -123,22 +104,13 @@ const MyProSidebar = () => {
                 <img
                   className="avater-image"
                   alt="profile user"
-                  width="100px"
+                  width="auto"
                   height="100px"
                   src={"../../assets/user.png"}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                  // style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
-              <Box textAlign="center">
-                <Typography
-                  variant="h3"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
-                >
-                  Harun Jeylan
-                </Typography>
-              </Box>
+              
             </Box>
           )}
           <Box paddingLeft={collapsed ? undefined : "10%"}>
@@ -158,22 +130,22 @@ const MyProSidebar = () => {
               Data
             </Typography>
             <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
+              title="Payment"
+              to="/payment"
+              icon={<CurrencyRupeeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
+              title="Add Account"
+              to="/carddetail"
+              icon={<AccountBalanceIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
-              to="/invoices"
+              title="Transaction "
+              to="/transactions"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
