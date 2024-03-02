@@ -18,6 +18,7 @@ import FAQ from "./pages/faq";
 import Geography from "./pages/geography";
 import SendPay from "./pages/sendpay";
 import CardDetail from "./pages/CardDetail";
+import Tick from "./components/Tick";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -42,6 +43,7 @@ const App = () => {
                 <Route path="/geography" element={<Geography />} />
                 <Route path="/sendpay" element={<SendPay />} />
                 <Route path="/carddetail" element={<CardDetail />} />
+                <Route path="/tick" element={<Tick />} />
               </Routes>
             </main>
           </div>
