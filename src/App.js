@@ -19,6 +19,7 @@ import Geography from "./pages/geography";
 import SendPay from "./pages/sendpay";
 import Payment from "./pages/invoices";
 import Transaction from "./pages/transaction";
+import CardDetail from "./pages/CardDetail";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path="/geography" element={<Geography />} />
                 <Route path="/sendpay" element={<SendPay />} />
                 <Route path="/form" element={<Form />} />
+                <Route path="/carddetail" element={<CardDetail />} />
               </Routes>
             </main>
           </div>
