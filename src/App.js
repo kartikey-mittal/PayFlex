@@ -6,7 +6,7 @@ import { MyProSidebarProvider } from "./pages/global/sidebar/sidebarContext";
 import Topbar from "./pages/global/Topbar";
 
 import Dashboard from "./pages/dashboard";
-import Team from "./pages/team";
+import Team from "./pages/transaction";
 import Invoices from "./pages/invoices";
 import Contacts from "./pages/contacts";
 import Form from "./pages/form";
@@ -17,6 +17,8 @@ import Pie from "./pages/pie";
 import FAQ from "./pages/faq";
 import Geography from "./pages/geography";
 import SendPay from "./pages/sendpay";
+import Payment from "./pages/invoices";
+import Transaction from "./pages/transaction";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -31,8 +33,8 @@ const App = () => {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/contacts" element={<Contacts />} />
-                <Route path="/invoices" element={<Invoices />} />
-                <Route path="/form" element={<Form />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/transactions" element={<Transaction />} />
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/pie" element={<Pie />} />
                 <Route path="/line" element={<Line />} />
@@ -40,6 +42,7 @@ const App = () => {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/geography" element={<Geography />} />
                 <Route path="/sendpay" element={<SendPay />} />
+                <Route path="/form" element={<Form />} />
               </Routes>
             </main>
           </div>

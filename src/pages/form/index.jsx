@@ -32,7 +32,7 @@ const Form = () => {
 
     return (
         <Box m="20px">
-          <Header title="CREATE USER" subtitle="Create a New User Profile" />
+          <Header title="Update Details" subtitle="We know updates can be there!" />
     
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (

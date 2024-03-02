@@ -7,7 +7,7 @@ export const mockDataTeam = [
     email: "jonsnow@gmail.com",
     age: 35,
     phone: "(665)121-5454",
-    access: "admin"
+    access: "incoming"
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const mockDataTeam = [
     email: "cerseilannister@gmail.com",
     age: 42,
     phone: "(421)314-2288",
-    access: "manager"
+    access: "outgoing"
   },
   {
     id: 3,
@@ -23,7 +23,7 @@ export const mockDataTeam = [
     email: "jaimelannister@gmail.com",
     age: 45,
     phone: "(422)982-6739",
-    access: "user"
+    access: "incoming"
   },
   {
     id: 4,
@@ -31,48 +31,9 @@ export const mockDataTeam = [
     email: "anyastark@gmail.com",
     age: 16,
     phone: "(921)425-6742",
-    access: "admin"
+    access: "outgoing"
   },
-  {
-    id: 5,
-    name: "Daenerys Targaryen",
-    email: "daenerystargaryen@gmail.com",
-    age: 31,
-    phone: "(421)445-1189",
-    access: "user"
-  },
-  {
-    id: 6,
-    name: "Ever Melisandre",
-    email: "evermelisandre@gmail.com",
-    age: 150,
-    phone: "(232)545-6483",
-    access: "manager"
-  },
-  {
-    id: 7,
-    name: "Ferrara Clifford",
-    email: "ferraraclifford@gmail.com",
-    age: 44,
-    phone: "(543)124-0123",
-    access: "user"
-  },
-  {
-    id: 8,
-    name: "Rossini Frances",
-    email: "rossinifrances@gmail.com",
-    age: 36,
-    phone: "(222)444-5555",
-    access: "user"
-  },
-  {
-    id: 9,
-    name: "Harvey Roxie",
-    email: "harveyroxie@gmail.com",
-    age: 65,
-    phone: "(444)555-6239",
-    access: "admin"
-  }
+  
 ];
 
 export const mockDataContacts = [
@@ -399,35 +360,24 @@ export const mockBarData = [
 
 export const mockPieData = [
   {
-    id: "hack",
-    label: "hack",
-    value: 239,
+    id: "Food",
+    label: "Food",
+    value: 20,
     color: "hsl(104, 70%, 50%)"
   },
   {
-    id: "make",
-    label: "make",
-    value: 170,
+    id: "Outgoing",
+    label: "Outgoing",
+    value: 100,
     color: "hsl(162, 70%, 50%)"
   },
   {
-    id: "go",
-    label: "go",
+    id: "Grocery",
+    label: "Grocery",
     value: 322,
     color: "hsl(291, 70%, 50%)"
   },
-  {
-    id: "lisp",
-    label: "lisp",
-    value: 503,
-    color: "hsl(229, 70%, 50%)"
-  },
-  {
-    id: "scala",
-    label: "scala",
-    value: 584,
-    color: "hsl(344, 70%, 50%)"
-  }
+  
 ];
 
 export const mockLineData = [

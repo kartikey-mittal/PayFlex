@@ -7,8 +7,9 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
-
-const Team = () => {
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+const Transaction = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -37,20 +38,20 @@ const Team = () => {
           <Box
             width="100%"
             m="0 auto"
-            p="5px"
+            p="1px"
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : colors.greenAccent[800]
+              access === "incoming"
+                ? 'green'
+                : 'red'
             }
             borderRadius="4px"
           >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+            {access === "incoming" && <ArrowDownwardIcon />}
+            {access === "outgoing" && <ArrowOutwardIcon />}
+            
+            <Typography color='white' sx={{ ml: "5px" ,pr:'5px'}}>
               {access}
             </Typography>
           </Box>
@@ -61,7 +62,7 @@ const Team = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="TEAM" subtitle="welcome to you Team" />
+        <Header title="TRANSACTIONS" subtitle="See your transactions" />
       </Box>
       <Box
         m="8px 0 0 0"
@@ -98,4 +99,4 @@ const Team = () => {
   );
 };
 
-export default Team;
+export default Transaction;
