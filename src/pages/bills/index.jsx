@@ -46,9 +46,9 @@ const Bills = () => {
     const [students, setStudents] = useState([]);
 
     const [activeTab, setActiveTab] = useState('split');
-    const handleTabClick = (tab) => {
-        setActiveTab(tab);
-    };
+    // const handleTabClick = (tab) => {
+    //     setActiveTab(tab);
+    // };
 
     const [amount, setAmount] = useState('');
     const [payamount, setPayAmount] = useState('');
@@ -96,7 +96,7 @@ await addDoc(splitsCollectionRef, data);
 
     // Declare loading state variable
     const [loading, setLoading] = useState(false);
-
+console.log(loading);
     const hanldepayamount = (event) => {
         const inputValue = event.target.value;
 
