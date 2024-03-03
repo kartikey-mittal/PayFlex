@@ -26,6 +26,7 @@ import LoginPage from "./pages/login";
 import SignupPage from "./pages/signup";
 import Bills from "./pages/bills";
 import Billstwo from "./pages/bills/index2";
+import Lakshay from "./pages/jain/lakshay";
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -67,6 +68,7 @@ const App = () => {
                  <Route path="/tick" element={<Tick />} />
                  <Route path="/login" element={<LoginPage />} />
                  <Route path="/signup" element={<SignupPage />} />
+                 <Route path="/Lakshay" element={<Lakshay/>} />
                 </Routes>
               </main>
             </div>
