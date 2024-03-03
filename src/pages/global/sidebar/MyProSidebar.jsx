@@ -12,9 +12,9 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-
+import DescriptionIcon from '@mui/icons-material/Description';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -131,6 +131,13 @@ const MyProSidebar = () => {
             <Item
               title="Transaction "
               to="/transactions"
+              icon={<DescriptionIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="My Bills "
+              to="/bills"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -141,6 +148,13 @@ const MyProSidebar = () => {
               title="Update"
               to="/form"
               icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="FAQ"
+              to="/faq"
+              icon={<LiveHelpIcon />}
               selected={selected}
               setSelected={setSelected}
             />
