@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, Grid, Backdrop, CircularProgress, MenuItem, Select } from "@mui/material";
+import { Box, Typography, TextField,  MenuItem, Select } from "@mui/material";
 import { useEffect } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import NoteIcon from "@mui/icons-material/Note";
+
 // import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Header from "../../components/Header";
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
-import PaymentLogo from '../payment/paymentlogo.png'
-import SplitLogo from '../payment/splitlogo.webp'
+
 import PaymentsIcon from '@mui/icons-material/Payments';
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { Call } from "@mui/icons-material";
+
 import { PieChart } from 'react-minimal-pie-chart';
 
-import { doc, getDoc, collection, addDoc, updateDoc, getDocs, serverTimestamp } from 'firebase/firestore';
+import { doc, collection, addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase'; // Adjust the import path as necessary
 const Bills = () => {
 

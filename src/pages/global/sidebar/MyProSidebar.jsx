@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { tokens } from "../../../theme";
 import { useTheme, Box, Typography } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-
+import CallSplitIcon from '@mui/icons-material/CallSplit';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
@@ -139,6 +139,13 @@ const MyProSidebar = () => {
               title="My Bills "
               to="/bills"
               icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Split Requests "
+              to="/billcard"
+              icon={<CallSplitIcon />}
               selected={selected}
               setSelected={setSelected}
             />
