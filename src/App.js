@@ -25,6 +25,8 @@ import Tick from "./components/Tick";
 import LoginPage from "./pages/login";
 import SignupPage from "./pages/signup";
 import Bills from "./pages/bills";
+import Billstwo from "./pages/bills/index2";
+
 const App = () => {
   const [theme, colorMode] = useMode();
  const location = useLocation();
@@ -58,6 +60,7 @@ const App = () => {
                  <Route path="/calendar" element={<Calendar />} />
                  <Route path="/geography" element={<Geography />} />
                  <Route path="/bills" element={<Bills />} />
+                 <Route path="/billstwo" element={<Billstwo />} />
                  <Route path="/sendpay" element={<SendPay />} />
                  <Route path="/form" element={<Form />} />
                  <Route path="/carddetail" element={<CardDetail />} />
